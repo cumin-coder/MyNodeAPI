@@ -41,7 +41,17 @@ router.post('/addimg', upload.single("singleload"), function (req, res) {
   // sendEamil(null,null,url,filename)
 });
 
-// 添加图片到数据库
+// 添加用户信息到数据库
+router.post('/addUserInfo', (req, res) => {
+  const result = req.body
+  console.log(result)
+  picModel.insertMany(result).then(mongo => {
+    console.log(mongo)
+  })
+  res.send({ status: 1, message: 'ok' })
+})
+
+// 从数据库中取出指定的用户信息
 
 
 // 追加图片评论数据

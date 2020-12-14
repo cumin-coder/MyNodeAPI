@@ -1,3 +1,4 @@
+
 const multer = require('multer')
 const express = require("express")
 const fs = require("fs")
@@ -24,7 +25,7 @@ let upload = multer({
 })
 
 
-// 添加图片到数据库
+// 添加图片到阿里云对象存储OSS中
 router.post('/addimg', upload.single("singleload"), function (req, res) {
   const { filename } = req.file
   // 保存到我的阿里云对象存储OSS中
@@ -41,31 +42,7 @@ router.post('/addimg', upload.single("singleload"), function (req, res) {
 });
 
 // 添加图片到数据库
-// router.post('/addimg', upload.single("singleload"), function (req, res) {
-//   let { filename, size } = req.file
 
-//   // 10485760 === 10MB
-//   if (size > 10485760) {
-//     return res.send({ status: 0, msg: "请上传10MB以内的图片!!" })
-//   }
-//   // 存入数据库的将是从阿里云OSS中返回的图片数据
-//   picModel.insertMany({
-//     url: `${PATHURL}/public/img/${filename}`,
-//     goodCount: 0,
-//     commentCount: 0,
-//     commentContent: [],
-//   }).then((data) => {
-//     // let { url } = data[0]
-//     // 发送给我的邮箱
-//     // sendEamil(null,null,url,filename)
-//     // 保存到我的阿里云对象存储OSS中
-//     put(filename)
-//     // 成功
-//     return res.send({ status: 1, msg: "is ok", url: `${PATHURL}/public/img/${filename}` })
-//   }).catch(err => {
-//     return res.send({ status: -1, msg: "系统错误", err })
-//   })
-// });
 
 // 追加图片评论数据
 router.post("/addCommentContent", (req, res) => {
@@ -82,7 +59,7 @@ router.post("/addCommentContent", (req, res) => {
     }).catch(err => {
       console.log(err)
     })
-})
+  })
 
 // 查询评论数据
 router.post("/findCommentContent", (req, res) => {

@@ -6,10 +6,8 @@ const Schema = mongoose.Schema
 
 // 限制可使用的模型
 const picSchema = new Schema({
-  url: { type: String, required: true },
-  goodCount: Number,
-  commentCount: Number,
-  commentContent: Array,
+  userUrl:{ type: String, required: true },
+  userText:{ type: String, required: true },
 })
 
 // 创建集合

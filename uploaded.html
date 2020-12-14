@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    img {
+      width: 300px;
+      height: 400px;
+    }
+  </style>
+</head>
+
+<body>
+  
+  <div id="app">
+    <img src="" alt="">
+    <input type="file" name="imgUploader" multiple id="file" />
+    <input type="submit" name="submit" id="btnSubmit" @click="submit_upload" />
+    </form>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+  <script>
+    new Vue({
+      el: "#app",
+      data() {
+        return {
+          PATH: "http://127.0.0.1:2003"
+        }
+      },
+      created(){
+
+      },
+      methods: {
+        submit_upload() {
+          const fileName = $("#file").get(0).files[0]
+          console.log(fileName)
+          var formData = new FormData();
+          formData.append('uploaded', fileName);
+          // 发起ajax请求
+
+          console.log(formData)
+          $.ajax({
+            url: this.PATH + "/uploaded/fileimg",
+            type: "POST",
+            data: formData,
+            cache: false,
+            processData: false,  // 告诉jQuery不要去处理发送的数据
+            contentType: false,   // 告诉jQuery不要去设置Content-Type请求头});
+            success: (result) => {
+              console.log(result)
+              if (result.status === 1) {
+                // 上传图片
+                // 显示图片
+                $("img").attr("src", this.PATH + result.data)
+              } else {
+                alert(result.msg)
+
+              }
+            }
+
+
+          });
+        }
+      }
+
+    })
+
+
+
+  </script>
+
+</body>
+
+</html>
